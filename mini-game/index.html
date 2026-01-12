@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Mini game arcade em canvas com desafios rapidos e visual neon." />
-    <title>Mini Game — Neon Drift</title>
+    <meta name="description" content="Mini game mobile-friendly de reflexo com um toque." />
+    <title>Mini Game — Tap Orbit</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -13,9 +13,9 @@
     <header class="game-header">
       <div class="container">
         <div>
-          <p class="eyebrow">Arcade rapido</p>
-          <h1>Neon Drift</h1>
-          <p class="muted">Desvie, colete energia e mantenha o ritmo.</p>
+          <p class="eyebrow">Mobile first</p>
+          <h1>Tap Orbit</h1>
+          <p class="muted">Toque para inverter, desvie dos drones e colete energia.</p>
         </div>
         <div class="hud">
           <div>
@@ -39,10 +39,10 @@
         <div class="panel">
           <h2>Como jogar</h2>
           <ul>
-            <li>Mova o cursor ou toque para controlar o orbe.</li>
-            <li>Desvie dos drones e colete os orbes de energia.</li>
-            <li>Combos aumentam a velocidade e a pontuacao.</li>
-            <li>Power-up de escudo segura um impacto.</li>
+            <li>Toque na tela para inverter o sentido do orbe.</li>
+            <li>Desvie dos drones posicionados na orbita.</li>
+            <li>Colete energia para aumentar o combo.</li>
+            <li>Quanto maior o combo, maior a pontuacao.</li>
           </ul>
           <div class="actions">
             <button class="btn primary" id="btnStart">Iniciar</button>
@@ -53,11 +53,11 @@
         </div>
 
         <div class="canvas-wrap">
-          <canvas id="gameCanvas" width="800" height="520" aria-label="Area do jogo"></canvas>
+          <canvas id="gameCanvas" aria-label="Area do jogo"></canvas>
           <div class="overlay" id="overlay">
             <div>
-              <h3>Neon Drift</h3>
-              <p>Sobreviva o maximo que puder.</p>
+              <h3>Tap Orbit</h3>
+              <p>Um toque muda tudo. Aguenta quanto tempo?</p>
               <button class="btn primary" id="btnOverlayStart">Jogar agora</button>
             </div>
           </div>
@@ -67,7 +67,7 @@
 
     <footer class="game-footer">
       <div class="container">
-        <p class="muted">Mini game para portfólio — offline e leve.</p>
+        <p class="muted">Mini game para portfólio — pensado para celular.</p>
       </div>
     </footer>
 

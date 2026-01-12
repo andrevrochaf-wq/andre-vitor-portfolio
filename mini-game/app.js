@@ -15,25 +15,20 @@ const state = {
   paused: false,
   score: 0,
   combo: 1,
-  best: Number(localStorage.getItem("neonBest")) || 0,
-  shield: 0,
+  best: Number(localStorage.getItem("tapOrbitBest")) || 0,
   time: 0,
-  difficulty: 1,
+  direction: 1,
+  speed: 0.02,
 };
 
 const player = {
-  x: 200,
-  y: 200,
-  r: 12,
-  vx: 0,
-  vy: 0,
-  targetX: 200,
-  targetY: 200,
+  angle: 0,
+  radius: 120,
+  size: 10,
 };
 
 const hazards = [];
 const orbs = [];
-const sparks = [];
 
 function resizeCanvas() {
   const rect = canvas.getBoundingClientRect();
@@ -42,21 +37,18 @@ function resizeCanvas() {
   canvas.height = rect.height * dpr;
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
+  player.radius = Math.min(rect.width, rect.height) * 0.35;
 }
 
 function resetGame() {
   state.score = 0;
   state.combo = 1;
-  state.shield = 0;
   state.time = 0;
-  state.difficulty = 1;
+  state.direction = 1;
+  state.speed = 0.02;
+  player.angle = 0;
   hazards.length = 0;
   orbs.length = 0;
-  sparks.length = 0;
-  player.x = canvas.clientWidth / 2;
-  player.y = canvas.clientHeight / 2;
-  player.targetX = player.x;
-  player.targetY = player.y;
   updateHUD();
 }
 
@@ -71,131 +63,49 @@ function setStatus(text) {
 }
 
 function spawnHazard() {
-  const side = Math.floor(Math.random() * 4);
-  const margin = 20;
-  const w = canvas.clientWidth;
-  const h = canvas.clientHeight;
-  let x = 0;
-  let y = 0;
-  if (side === 0) {
-    x = -margin;
-    y = Math.random() * h;
-  } else if (side === 1) {
-    x = w + margin;
-    y = Math.random() * h;
-  } else if (side === 2) {
-    x = Math.random() * w;
-    y = -margin;
-  } else {
-    x = Math.random() * w;
-    y = h + margin;
-  }
-  const angle = Math.atan2(player.y - y, player.x - x);
-  const speed = 1.2 + state.difficulty * 0.4;
-  hazards.push({
-    x,
-    y,
-    r: 10 + Math.random() * 6,
-    vx: Math.cos(angle) * speed,
-    vy: Math.sin(angle) * speed,
-  });
+  const angle = Math.random() * Math.PI * 2;
+  hazards.push({ angle, size: 12 + Math.random() * 6, life: 600 });
 }
 
 function spawnOrb() {
-  const w = canvas.clientWidth;
-  const h = canvas.clientHeight;
-  orbs.push({
-    x: 40 + Math.random() * (w - 80),
-    y: 40 + Math.random() * (h - 80),
-    r: 8,
-    type: Math.random() > 0.9 ? "shield" : "score",
-  });
-}
-
-function addSpark(x, y, color) {
-  for (let i = 0; i < 10; i++) {
-    sparks.push({
-      x,
-      y,
-      vx: (Math.random() - 0.5) * 3,
-      vy: (Math.random() - 0.5) * 3,
-      life: 20 + Math.random() * 10,
-      color,
-    });
-  }
+  const angle = Math.random() * Math.PI * 2;
+  orbs.push({ angle, size: 9, life: 400 });
 }
 
 function update(dt) {
   if (!state.running || state.paused) return;
   state.time += dt;
-  state.score += dt * 10 * state.combo;
-  state.difficulty = 1 + state.score / 600;
+  state.score += dt * 8 * state.combo;
+  state.speed = 0.02 + Math.min(state.score / 5000, 0.04);
 
-  if (state.time % 60 < 1) {
-    spawnHazard();
-  }
-  if (orbs.length < 3 && Math.random() > 0.98) {
-    spawnOrb();
-  }
+  player.angle += state.direction * state.speed * dt;
 
-  const dx = player.targetX - player.x;
-  const dy = player.targetY - player.y;
-  player.x += dx * 0.08;
-  player.y += dy * 0.08;
+  if (Math.random() > 0.98 && hazards.length < 6) spawnHazard();
+  if (Math.random() > 0.985 && orbs.length < 3) spawnOrb();
 
-  hazards.forEach((h) => {
-    h.x += h.vx;
-    h.y += h.vy;
-  });
+  const playerPos = getOrbitPosition(player.angle, player.radius);
 
   for (let i = hazards.length - 1; i >= 0; i--) {
-    const h = hazards[i];
-    if (
-      h.x < -50 ||
-      h.x > canvas.clientWidth + 50 ||
-      h.y < -50 ||
-      h.y > canvas.clientHeight + 50
-    ) {
-      hazards.splice(i, 1);
+    const hazard = hazards[i];
+    hazard.life -= dt * 6;
+    if (hazard.life <= 0) hazards.splice(i, 1);
+    const hazardPos = getOrbitPosition(hazard.angle, player.radius);
+    if (distance(playerPos.x, playerPos.y, hazardPos.x, hazardPos.y) < player.size + hazard.size) {
+      endGame();
+      return;
     }
   }
 
   for (let i = orbs.length - 1; i >= 0; i--) {
     const orb = orbs[i];
-    if (distance(player.x, player.y, orb.x, orb.y) < player.r + orb.r + 4) {
-      if (orb.type === "shield") {
-        state.shield = 1;
-        addSpark(orb.x, orb.y, "#7b5cff");
-        setStatus("Escudo ativo!");
-      } else {
-        state.combo += 1;
-        state.score += 100 * state.combo;
-        addSpark(orb.x, orb.y, "#00f0ff");
-      }
+    orb.life -= dt * 6;
+    if (orb.life <= 0) orbs.splice(i, 1);
+    const orbPos = getOrbitPosition(orb.angle, player.radius);
+    if (distance(playerPos.x, playerPos.y, orbPos.x, orbPos.y) < player.size + orb.size + 2) {
+      state.combo += 1;
+      state.score += 80 * state.combo;
       orbs.splice(i, 1);
     }
-  }
-
-  for (let i = hazards.length - 1; i >= 0; i--) {
-    const h = hazards[i];
-    if (distance(player.x, player.y, h.x, h.y) < player.r + h.r) {
-      if (state.shield > 0) {
-        state.shield = 0;
-        hazards.splice(i, 1);
-        addSpark(player.x, player.y, "#ff6ad5");
-      } else {
-        endGame();
-        return;
-      }
-    }
-  }
-
-  for (let i = sparks.length - 1; i >= 0; i--) {
-    const s = sparks[i];
-    s.x += s.vx;
-    s.y += s.vy;
-    s.life -= 1;
-    if (s.life <= 0) sparks.splice(i, 1);
   }
 
   if (state.combo > 1 && state.time % 120 < 1) {
@@ -207,43 +117,35 @@ function update(dt) {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+  const center = getCenter();
 
-  ctx.fillStyle = "rgba(123, 92, 255, 0.12)";
-  ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+  ctx.strokeStyle = "rgba(0, 240, 255, 0.25)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(center.x, center.y, player.radius, 0, Math.PI * 2);
+  ctx.stroke();
 
-  hazards.forEach((h) => {
+  hazards.forEach((hazard) => {
+    const pos = getOrbitPosition(hazard.angle, player.radius);
     ctx.beginPath();
-    ctx.fillStyle = "rgba(255, 106, 213, 0.8)";
-    ctx.arc(h.x, h.y, h.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255, 143, 245, 0.9)";
+    ctx.arc(pos.x, pos.y, hazard.size, 0, Math.PI * 2);
     ctx.fill();
   });
 
   orbs.forEach((orb) => {
+    const pos = getOrbitPosition(orb.angle, player.radius);
     ctx.beginPath();
-    ctx.fillStyle = orb.type === "shield" ? "#7b5cff" : "#00f0ff";
-    ctx.arc(orb.x, orb.y, orb.r, 0, Math.PI * 2);
+    ctx.fillStyle = "#00f0ff";
+    ctx.arc(pos.x, pos.y, orb.size, 0, Math.PI * 2);
     ctx.fill();
   });
 
-  sparks.forEach((s) => {
-    ctx.beginPath();
-    ctx.fillStyle = s.color;
-    ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
+  const playerPos = getOrbitPosition(player.angle, player.radius);
   ctx.beginPath();
-  ctx.fillStyle = state.shield ? "#7b5cff" : "#00f0ff";
-  ctx.arc(player.x, player.y, player.r, 0, Math.PI * 2);
+  ctx.fillStyle = "#7b5cff";
+  ctx.arc(playerPos.x, playerPos.y, player.size, 0, Math.PI * 2);
   ctx.fill();
-
-  if (state.shield) {
-    ctx.strokeStyle = "rgba(123, 92, 255, 0.6)";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(player.x, player.y, player.r + 6, 0, Math.PI * 2);
-    ctx.stroke();
-  }
 }
 
 let last = 0;
@@ -255,14 +157,39 @@ function loop(timestamp) {
   requestAnimationFrame(loop);
 }
 
+function getCenter() {
+  return { x: canvas.clientWidth / 2, y: canvas.clientHeight / 2 };
+}
+
+function getOrbitPosition(angle, radius) {
+  const center = getCenter();
+  return {
+    x: center.x + Math.cos(angle) * radius,
+    y: center.y + Math.sin(angle) * radius,
+  };
+}
+
+function distance(x1, y1, x2, y2) {
+  return Math.hypot(x1 - x2, y1 - y2);
+}
+
+function tap() {
+  if (!state.running) {
+    startGame();
+    return;
+  }
+  state.direction *= -1;
+}
+
 function startGame() {
   state.running = true;
   state.paused = false;
   overlay.classList.add("hidden");
-  setStatus("Desvie e colete energia!");
+  setStatus("Toque para inverter o sentido!");
 }
 
 function pauseGame() {
+  if (!state.running) return;
   state.paused = !state.paused;
   setStatus(state.paused ? "Jogo pausado" : "Em andamento");
 }
@@ -273,21 +200,9 @@ function endGame() {
   setStatus("Fim de jogo. Tente de novo!");
   if (state.score > state.best) {
     state.best = state.score;
-    localStorage.setItem("neonBest", Math.floor(state.best));
+    localStorage.setItem("tapOrbitBest", Math.floor(state.best));
   }
   updateHUD();
-}
-
-function distance(x1, y1, x2, y2) {
-  return Math.hypot(x1 - x2, y1 - y2);
-}
-
-function handlePointer(event) {
-  const rect = canvas.getBoundingClientRect();
-  const x = (event.clientX || event.touches?.[0].clientX) - rect.left;
-  const y = (event.clientY || event.touches?.[0].clientY) - rect.top;
-  player.targetX = Math.max(0, Math.min(rect.width, x));
-  player.targetY = Math.max(0, Math.min(rect.height, y));
 }
 
 btnStart.addEventListener("click", () => {
@@ -304,10 +219,17 @@ btnRestart.addEventListener("click", () => {
   startGame();
 });
 
-canvas.addEventListener("mousemove", handlePointer);
-canvas.addEventListener("touchmove", (event) => {
+canvas.addEventListener("click", tap);
+canvas.addEventListener("touchstart", (event) => {
   event.preventDefault();
-  handlePointer(event);
+  tap();
+});
+
+document.body.addEventListener("keydown", (event) => {
+  if (event.key === " ") {
+    event.preventDefault();
+    tap();
+  }
 });
 
 window.addEventListener("resize", resizeCanvas);
