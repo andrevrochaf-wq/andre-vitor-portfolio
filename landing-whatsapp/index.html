@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Landing page de alta conversao com CTA para WhatsApp e gerador de mensagem." />
+    <title>ANDRE VITOR — Solucoes</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#hero">ANDRE VITOR — Solucoes</a>
+        <nav class="nav" aria-label="Navegacao">
+          <a class="nav-link" href="#beneficios">Beneficios</a>
+          <a class="nav-link" href="#como">Como funciona</a>
+          <a class="nav-link" href="#mensagem">Mensagem</a>
+          <a class="nav-link" href="#faq">FAQ</a>
+        </nav>
+        <button class="toggle-motion" id="toggleMotion" type="button" aria-pressed="false">
+          Reduzir animacoes
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Resultados rapidos</p>
+            <h1>Landing page que transforma interesse em conversas reais no WhatsApp.</h1>
+            <p class="subheadline">
+              Uma estrutura enxuta, profissional e orientada a conversao para negocios que querem respostas rapidas.
+            </p>
+            <div class="cta-row">
+              <a class="btn primary" href="#mensagem">
+                <img src="assets/icons/whatsapp.svg" alt="" aria-hidden="true" />
+                Falar no WhatsApp
+              </a>
+              <a class="btn ghost" href="#beneficios">Ver beneficios</a>
+            </div>
+            <div class="trust-bar">
+              <span>Resposta rapida</span>
+              <span>Atendimento personalizado</span>
+              <span>Orcamento sem compromisso</span>
+            </div>
+          </div>
+          <div class="hero-card reveal">
+            <div class="hero-card-inner">
+              <h2>Mais conversas, menos friccao</h2>
+              <p>Conecte visitantes com sua equipe em segundos e acompanhe cada lead.</p>
+              <div class="hero-metrics">
+                <div>
+                  <strong>+42%</strong>
+                  <span>Mais cliques</span>
+                </div>
+                <div>
+                  <strong>2x</strong>
+                  <span>Mais respostas</span>
+                </div>
+              </div>
+              <div class="hero-badges">
+                <span>WhatsApp direto</span>
+                <span>Mensagem pronta</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="beneficios">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Beneficios claros</h2>
+            <p>Uma pagina simples, mas construida para vender a qualquer hora.</p>
+          </div>
+          <div class="card-grid">
+            <article class="card reveal">
+              <img src="assets/icons/star.svg" alt="" aria-hidden="true" />
+              <h3>Credibilidade imediata</h3>
+              <p>Elementos de prova social e destaque de valor logo na primeira dobra.</p>
+            </article>
+            <article class="card reveal">
+              <img src="assets/icons/shield.svg" alt="" aria-hidden="true" />
+              <h3>Contato protegido</h3>
+              <p>Mensagem pronta reduz erros e acelera o atendimento.</p>
+            </article>
+            <article class="card reveal">
+              <img src="assets/icons/spark.svg" alt="" aria-hidden="true" />
+              <h3>Conversao em 1 clique</h3>
+              <p>CTA principal direto para o WhatsApp com texto pre-preenchido.</p>
+            </article>
+            <article class="card reveal">
+              <img src="assets/icons/faq.svg" alt="" aria-hidden="true" />
+              <h3>FAQ responsivo</h3>
+              <p>Objeções resolvidas sem depender de atendimento humano.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="como">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Como funciona</h2>
+            <p>Em tres passos simples você ja esta recebendo mensagens qualificadas.</p>
+          </div>
+          <div class="steps">
+            <article class="step reveal">
+              <span>1</span>
+              <h3>Visita com foco</h3>
+              <p>Headline e beneficios claros para orientar a decisão.</p>
+            </article>
+            <article class="step reveal">
+              <span>2</span>
+              <h3>Mensagem gerada</h3>
+              <p>Formulario rapido que monta a mensagem perfeita.</p>
+            </article>
+            <article class="step reveal">
+              <span>3</span>
+              <h3>Contato imediato</h3>
+              <p>Click direto no WhatsApp com texto pronto para enviar.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="mensagem">
+        <div class="container message-grid">
+          <div class="section-head reveal">
+            <h2>Gerador de mensagem</h2>
+            <p>Preencha e copie ou abra direto no WhatsApp.</p>
+          </div>
+          <form class="message-form reveal" id="messageForm">
+            <label>
+              Nome
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              Interesse
+              <select name="interest" required>
+                <option value="Landing page">Landing page</option>
+                <option value="Site institucional">Site institucional</option>
+                <option value="E-commerce">E-commerce</option>
+                <option value="Consultoria">Consultoria</option>
+              </select>
+            </label>
+            <label>
+              Melhor horario
+              <select name="time" required>
+                <option value="Manha">Manha</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noite">Noite</option>
+              </select>
+            </label>
+            <label>
+              Mensagem adicional
+              <textarea name="extra" rows="3"></textarea>
+            </label>
+            <div class="form-actions">
+              <button class="btn primary" type="submit">
+                <img src="assets/icons/arrow.svg" alt="" aria-hidden="true" />
+                Gerar mensagem
+              </button>
+              <button class="btn ghost" type="button" id="btnCopy">Copiar mensagem</button>
+              <button class="btn ghost" type="button" id="btnOpen">Abrir WhatsApp</button>
+            </div>
+            <textarea class="message-output" id="messageOutput" rows="4" readonly></textarea>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" id="depoimentos">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Prova social</h2>
+            <p>Clientes sentem a diferenca na primeira interacao.</p>
+          </div>
+          <div class="testimonials">
+            <article class="card reveal">
+              <p>"A pagina ficou leve e aumentou os contatos em poucas semanas."</p>
+              <span>Mariana R. — Loja local</span>
+            </article>
+            <article class="card reveal">
+              <p>"O gerador de mensagem reduz as idas e vindas com os clientes."</p>
+              <span>Lucas M. — Servicos</span>
+            </article>
+            <article class="card reveal">
+              <p>"Layout moderno e foco no WhatsApp, exatamente o que precisavamos."</p>
+              <span>Juliana S. — Consultoria</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Perguntas frequentes</h2>
+            <p>Tire duvidas antes de chamar no WhatsApp.</p>
+          </div>
+          <div class="faq" id="faqList">
+            <button class="faq-item" aria-expanded="false">
+              <span>Funciona para qualquer negocio?</span>
+              <img src="assets/icons/faq.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="faq-panel">
+              <p>Sim. O layout e ajustavel para diversos tipos de servicos e produtos.</p>
+            </div>
+            <button class="faq-item" aria-expanded="false">
+              <span>Consigo trocar os textos?</span>
+              <img src="assets/icons/faq.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="faq-panel">
+              <p>Todos os textos sao editaveis diretamente no HTML.</p>
+            </div>
+            <button class="faq-item" aria-expanded="false">
+              <span>O WhatsApp abre direto?</span>
+              <img src="assets/icons/faq.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="faq-panel">
+              <p>Sim, com texto pre-preenchido para facilitar o primeiro contato.</p>
+            </div>
+            <button class="faq-item" aria-expanded="false">
+              <span>Posso integrar com outro canal?</span>
+              <img src="assets/icons/faq.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="faq-panel">
+              <p>A estrutura permite adicionar outros CTAs facilmente.</p>
+            </div>
+            <button class="faq-item" aria-expanded="false">
+              <span>Precisa de hospedagem?</span>
+              <img src="assets/icons/faq.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="faq-panel">
+              <p>Funciona abrindo o index.html ou em qualquer hosting estatico.</p>
+            </div>
+            <button class="faq-item" aria-expanded="false">
+              <span>Posso reduzir animacoes?</span>
+              <img src="assets/icons/faq.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="faq-panel">
+              <p>Sim, ha um toggle de reduzir animacoes no topo.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section final-cta">
+        <div class="container reveal">
+          <h2>Pronto para transformar visitas em conversas?</h2>
+          <p>Chame no WhatsApp agora e receba um retorno rapido.</p>
+          <a class="btn primary" href="#mensagem">
+            <img src="assets/icons/whatsapp.svg" alt="" aria-hidden="true" />
+            Falar no WhatsApp
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>ANDRE VITOR — Solucoes. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">↑</button>
+    <a class="whatsapp-float" id="whatsappFloat" href="#mensagem" aria-label="Abrir WhatsApp">
+      <img src="assets/icons/whatsapp.svg" alt="" aria-hidden="true" />
+    </a>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

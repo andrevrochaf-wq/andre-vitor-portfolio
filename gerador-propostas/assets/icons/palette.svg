@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Paleta">
+  <path d="M12 4a8 8 0 1 0 0 16c1.5 0 2-1 2-2 0-1-1-2-2-2h-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="8" cy="10" r="1" fill="currentColor"/>
+  <circle cx="12" cy="8" r="1" fill="currentColor"/>
+  <circle cx="16" cy="10" r="1" fill="currentColor"/>
+</svg>

@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfólio de André Vitor, desenvolvedor em formação com foco em entregar soluções, aprender rápido e evoluir com consistência." />
+    <meta property="og:title" content="ANDRÉ VITOR — Portfólio" />
+    <meta property="og:description" content="Em formação para transformar aprendizado em soluções reais." />
+    <meta property="og:image" content="assets/img/avatar.svg" />
+    <title>ANDRÉ VITOR — Portfólio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="assets/img/avatar.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="bg-static" aria-hidden="true"></div>
+    <canvas id="space" aria-hidden="true"></canvas>
+    <div class="spotlight" aria-hidden="true"></div>
+
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a class="brand" href="#hero" aria-label="Ir para o topo">ANDRÉ VITOR</a>
+        <nav class="nav" aria-label="Seções">
+          <a class="nav-link" href="#skills">Habilidades</a>
+          <a class="nav-link" href="#diferencial">Diferencial</a>
+          <a class="nav-link" href="#formacao">Formação</a>
+          <a class="nav-link" href="#projetos">Projetos</a>
+          <a class="nav-link" href="#contato">Contato</a>
+        </nav>
+        <button class="toggle-motion" id="toggleMotion" type="button" aria-pressed="false">
+          Reduzir animações
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero" aria-label="Apresentação">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">Porta de entrada para o mercado</p>
+            <h1>Em formação para transformar <span class="accent">aprendizado</span> em soluções reais.</h1>
+            <p class="hero-lead">Aprendizado &middot; Disciplina &middot; Evolução</p>
+            <p class="subheadline">
+              Tenho conhecimento técnico em crescimento e busco oportunidades para praticar,
+              aprender na prática e evoluir com consistência em cada projeto.
+            </p>
+            <div class="cta-row">
+              <a class="btn primary" href="#skills">Ver habilidades</a>
+              <a class="btn ghost" href="#contato">Falar comigo</a>
+            </div>
+            <div class="hero-badges">
+              <span>Disponível para oportunidades</span>
+              <span>Baseado em Natal/RN</span>
+            </div>
+          </div>
+          <div class="hero-card reveal">
+            <div class="hero-card-inner">
+              <div class="avatar-wrap">
+                <img src="assets/img/avatar.svg" alt="Avatar estilizado de André Vitor" />
+              </div>
+              <div>
+                <h2>ANDRÉ VITOR</h2>
+                <p>Dev em formação, construindo base sólida com foco em prática, evolução e entrega responsável.</p>
+                <div class="pill-row" aria-label="Focos atuais">
+                  <span>Web</span>
+                  <span>Produto</span>
+                  <span>Negócios</span>
+                </div>
+                <div class="signal">
+                  <span class="dot"></span>
+                  <span>Em evolução contínua</span>
+                </div>
+              </div>
+              <div class="hero-metrics">
+                <div>
+                  <strong>5+</strong>
+                  <span>Linguagens em estudo</span>
+                </div>
+                <div>
+                  <strong>100%</strong>
+                  <span>Compromisso</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-glow" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="hero-orbits" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </section>
+
+      <section class="section" id="skills" aria-label="Áreas de conhecimento">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Áreas de conhecimento</h2>
+            <p>Fundamentos sólidos e curiosidade técnica para construir soluções escaláveis.</p>
+          </div>
+          <div class="skills-grid">
+            <article class="skill-card reveal">
+              <img src="assets/icons/java.svg" alt="Logo Java" />
+              <h3>Java</h3>
+              <p>Orientação a objetos, robustez e base forte para sistemas confiáveis.</p>
+            </article>
+            <article class="skill-card reveal">
+              <img src="assets/icons/javascript.svg" alt="Logo JavaScript" />
+              <h3>JavaScript</h3>
+              <p>Dinâmica, versátil e essencial para criar experiências web vivas.</p>
+            </article>
+            <article class="skill-card reveal">
+              <img src="assets/icons/html.svg" alt="Logo HTML" />
+              <h3>HTML</h3>
+              <p>Estrutura semântica que garante acessibilidade e clareza na web.</p>
+            </article>
+            <article class="skill-card reveal">
+              <img src="assets/icons/css.svg" alt="Logo CSS" />
+              <h3>CSS</h3>
+              <p>Design responsivo e identidade visual com estilo e performance.</p>
+            </article>
+            <article class="skill-card reveal">
+              <img src="assets/icons/csharp.svg" alt="Logo C#" />
+              <h3>C#</h3>
+              <p>Produtividade e foco em soluções modernas, especialmente em .NET.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="diferencial" aria-label="Experiência e diferencial">
+        <div class="container split">
+          <div class="section-head reveal">
+            <h2>Experiência & diferencial</h2>
+            <p>Transição com bagagem prática em comunicação e visão de resultado.</p>
+          </div>
+          <div class="diferencial-cards">
+            <article class="diferencial-card reveal">
+              <h3>Experiência com vendas</h3>
+              <p>Tradução de necessidades em soluções claras, negociação e foco em conversão.</p>
+            </article>
+            <article class="diferencial-card reveal">
+              <h3>Mercado financeiro</h3>
+              <p>Disciplina, análise de risco e mentalidade orientada a dados para decisões melhores.</p>
+            </article>
+            <article class="diferencial-card reveal">
+              <h3>Valor profissional</h3>
+              <p>Comunicação precisa, capacidade de execução e energia para aprender rápido.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="formacao" aria-label="Formação">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Formação</h2>
+            <p>Trajetória acadêmica com foco em tecnologia, inovação e IA.</p>
+          </div>
+          <div class="timeline">
+            <div class="timeline-item reveal">
+              <span class="timeline-dot"></span>
+              <div>
+                <h3>Análise e Desenvolvimento de Sistemas</h3>
+                <p>Estudante do curso, aprofundando fundamentos de software e arquitetura.</p>
+              </div>
+            </div>
+            <div class="timeline-item reveal">
+              <span class="timeline-dot"></span>
+              <div>
+                <h3>Inovação e Empreendedorismo</h3>
+                <p>Aluno do curso, desenvolvendo mentalidade de produto e visão de mercado.</p>
+              </div>
+            </div>
+            <div class="timeline-item reveal">
+              <span class="timeline-dot"></span>
+              <div>
+                <h3>Curso técnico de IA no IMD/UFRN</h3>
+                <p>Vou começar em breve, buscando aprofundar aplicações práticas de IA.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projetos" aria-label="Projetos">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Projetos em destaque</h2>
+            <p>Ideias aplicadas com foco em experiência, performance e clareza técnica.</p>
+          </div>
+          <div class="projects-grid">
+            <article class="project-card large reveal">
+              <div class="project-top">
+                <h3>Mini Game — Neon Drift</h3>
+                <p>Jogo arcade em canvas com combos, escudos e pontuacao.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+              </div>
+              <div class="tags">
+                <span>Canvas</span>
+                <span>Arcade</span>
+                <span>Interativo</span>
+              </div>
+              <div class="project-actions">
+                <a href="mini-game/index.html" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Dashboard de Metas (offline)</h3>
+                <p>Painel para metas mensais, KPIs, graficos e registros de vendas.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+              </div>
+              <div class="tags">
+                <span>Canvas</span>
+                <span>Insights</span>
+                <span>Offline</span>
+              </div>
+              <div class="project-actions">
+                <a href="dashboard-metas/index.html" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Gerador de Propostas</h3>
+                <p>Preview em tempo real, templates e exportacao via imprimir/PDF.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+              </div>
+              <div class="tags">
+                <span>Templates</span>
+                <span>PDF</span>
+                <span>Offline</span>
+              </div>
+              <div class="project-actions">
+                <a href="gerador-propostas/index.html" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Landing WhatsApp</h3>
+                <p>Alta conversao com CTA e gerador de mensagem para WhatsApp.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+              </div>
+              <div class="tags">
+                <span>Conversao</span>
+                <span>CTA</span>
+                <span>Marketing</span>
+              </div>
+              <div class="project-actions">
+                <a href="landing-whatsapp/index.html" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Controle de Caixa</h3>
+                <p>Entradas, saidas, categorias e relatorios com graficos.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+              </div>
+              <div class="tags">
+                <span>Financeiro</span>
+                <span>Graficos</span>
+                <span>Offline</span>
+              </div>
+              <div class="project-actions">
+                <a href="controle-caixa/index.html" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Simulador de Investimentos</h3>
+                <p>Ferramenta educativa com comparacao de cenarios e grafico.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+              </div>
+              <div class="tags">
+                <span>Educativo</span>
+                <span>Comparacao</span>
+                <span>Canvas</span>
+              </div>
+              <div class="project-actions">
+                <a href="simulador-investimentos/index.html" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Mini CRM de Leads (offline)</h3>
+                <p>Funil de vendas com Kanban, lista, filtros e dados salvos localmente.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+              </div>
+              <div class="tags">
+                <span>JavaScript</span>
+                <span>UX</span>
+                <span>Offline</span>
+              </div>
+              <div class="project-actions">
+                <a href="mini-crm/index.html" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Plataforma de estudos guiados</h3>
+                <p>Landing page que organiza trilhas de aprendizado com foco em progresso visível.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+              </div>
+              <div class="tags">
+                <span>JavaScript</span>
+                <span>UX</span>
+                <span>Web</span>
+              </div>
+              <div class="project-actions">
+                <a href="#" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Dashboard financeiro minimalista</h3>
+                <p>Interface para acompanhar investimentos com leitura rápida e foco em decisão.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/html.svg" alt="HTML" />
+                <img src="assets/icons/css.svg" alt="CSS" />
+                <img src="assets/icons/javascript.svg" alt="JavaScript" />
+              </div>
+              <div class="tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>Data</span>
+              </div>
+              <div class="project-actions">
+                <a href="#" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+            <article class="project-card reveal">
+              <div class="project-top">
+                <h3>Aplicativo de metas pessoais</h3>
+                <p>Protótipo de produtividade com microinterações e foco em consistência.</p>
+              </div>
+              <div class="project-icons" aria-label="Tecnologias">
+                <img src="assets/icons/java.svg" alt="Java" />
+                <img src="assets/icons/csharp.svg" alt="C#" />
+              </div>
+              <div class="tags">
+                <span>Java</span>
+                <span>Mobile</span>
+                <span>UI</span>
+              </div>
+              <div class="project-actions">
+                <a href="#" class="btn small">Demo</a>
+                <a href="#" class="btn ghost small">Código</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contato" aria-label="Contato">
+        <div class="container contact-grid">
+          <div class="contact-info reveal">
+            <h2>Contato</h2>
+            <p>Vamos conversar sobre oportunidades, parcerias ou ideias que precisam sair do papel.</p>
+            <div class="contact-actions">
+              <a class="btn primary" href="mailto:andrevrochaf@gmail.com" aria-label="Enviar e-mail">Email</a>
+              <a class="btn ghost" href="https://www.linkedin.com/in/andr%C3%A9-vitor-6211242aa/" aria-label="LinkedIn">LinkedIn</a>
+              <a class="btn ghost" href="#" aria-label="GitHub">GitHub</a>
+            </div>
+            <p class="contact-note">Aberto a novos desafios e projetos com impacto real.</p>
+          </div>
+          <form class="contact-form reveal" id="contactForm">
+            <label>
+              Nome
+              <input type="text" name="name" placeholder="Seu nome" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" placeholder="seu@email.com" required />
+            </label>
+            <label>
+              Mensagem
+              <textarea name="message" rows="4" placeholder="Conte sua ideia" required></textarea>
+            </label>
+            <button class="btn primary" type="submit">Enviar mensagem</button>
+            <p class="form-hint">Ao enviar, abriremos seu cliente de email com a mensagem pronta.</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2025 ANDRÉ VITOR — Construindo carreira com consistência.</p>
+      </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">↑</button>
+
+    <script src="app.js"></script>
+  </body>
+</html>

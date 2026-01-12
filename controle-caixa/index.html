@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Controle de caixa offline com entradas, saidas e relatorios." />
+    <title>Controle de Caixa</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="container header-grid">
+        <div>
+          <p class="eyebrow">Financeiro pessoal</p>
+          <h1>Controle de Caixa</h1>
+          <p class="muted">Organize entradas e saidas com clareza mensal.</p>
+        </div>
+        <div class="header-actions">
+          <div class="month-picker">
+            <button class="icon-btn" id="btnPrevMonth" aria-label="Mes anterior">
+              <img src="assets/icons/back.svg" alt="" aria-hidden="true" />
+            </button>
+            <span id="monthLabel">Janeiro 2026</span>
+            <button class="icon-btn" id="btnNextMonth" aria-label="Mes seguinte">
+              <img src="assets/icons/back.svg" class="flip" alt="" aria-hidden="true" />
+            </button>
+          </div>
+          <button class="btn primary" id="btnAdd">
+            <img src="assets/icons/plus.svg" alt="" aria-hidden="true" />
+            Lancamento
+          </button>
+          <button class="btn" id="btnReport">
+            <img src="assets/icons/report.svg" alt="" aria-hidden="true" />
+            Relatorio
+          </button>
+          <button class="btn" id="btnExport">
+            <img src="assets/icons/export.svg" alt="" aria-hidden="true" />
+            Exportar
+          </button>
+          <button class="btn" id="btnImport">
+            <img src="assets/icons/import.svg" alt="" aria-hidden="true" />
+            Importar
+          </button>
+          <button class="btn" id="btnSettings">
+            <img src="assets/icons/settings.svg" alt="" aria-hidden="true" />
+            Config
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="kpis">
+        <div class="container">
+          <div class="kpi-grid" id="kpiGrid"></div>
+        </div>
+      </section>
+
+      <section class="charts">
+        <div class="container">
+          <div class="section-head">
+            <h2>Graficos</h2>
+            <p class="muted">Visao rapida das saidas e do saldo acumulado.</p>
+          </div>
+          <div class="chart-grid">
+            <div class="chart-card">
+              <h3>Saidas por categoria</h3>
+              <canvas id="barChart"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Saldo acumulado</h3>
+              <canvas id="lineChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="transactions">
+        <div class="container">
+          <div class="section-head">
+            <h2>Lancamentos</h2>
+            <div class="filters">
+              <select id="filterType" aria-label="Filtrar por tipo">
+                <option value="">Todos</option>
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saida</option>
+              </select>
+              <select id="filterCategory" aria-label="Filtrar por categoria"></select>
+              <input type="date" id="filterStart" aria-label="Data inicial" />
+              <input type="date" id="filterEnd" aria-label="Data final" />
+              <div class="search-field">
+                <img src="assets/icons/filter.svg" alt="" aria-hidden="true" />
+                <input type="search" id="searchInput" placeholder="Buscar descricao" />
+              </div>
+              <select id="sortBy" aria-label="Ordenar">
+                <option value="recente">Mais recente</option>
+                <option value="valor">Maior valor</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Tipo</th>
+                  <th>Valor</th>
+                  <th>Categoria</th>
+                  <th>Descricao</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container">
+        <p class="muted">Controle de Caixa — Offline</p>
+      </div>
+    </footer>
+
+    <div class="modal" id="transactionModal" role="dialog" aria-modal="true" aria-labelledby="transactionTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="transactionTitle">Novo lancamento</h3>
+          <button class="icon-btn close-btn" data-close="transactionModal" aria-label="Fechar">×</button>
+        </div>
+        <form id="transactionForm">
+          <div class="form-grid">
+            <label>
+              Tipo*
+              <select name="type" required>
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saida</option>
+              </select>
+            </label>
+            <label>
+              Data*
+              <input type="date" name="date" required />
+            </label>
+            <label>
+              Valor (R$)*
+              <input type="number" name="value" min="0.01" step="0.01" required />
+            </label>
+            <label>
+              Categoria*
+              <select name="category" required></select>
+            </label>
+          </div>
+          <label class="full">
+            Descricao
+            <input type="text" name="description" />
+          </label>
+          <div class="modal-footer">
+            <button class="btn ghost" type="button" data-close="transactionModal">Cancelar</button>
+            <button class="btn primary" type="submit">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="settingsTitle">Configuracoes</h3>
+          <button class="icon-btn close-btn" data-close="settingsModal" aria-label="Fechar">×</button>
+        </div>
+        <div class="settings-grid">
+          <div>
+            <h4>Categorias e limites</h4>
+            <div id="categoryList"></div>
+            <button class="btn ghost" type="button" id="btnAddCategory">Adicionar categoria</button>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggleMotion" />
+            <span>Reduzir animacoes</span>
+          </label>
+          <button class="btn danger" id="btnReset">Resetar dados</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="importModal" role="dialog" aria-modal="true" aria-labelledby="importTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="importTitle">Importar dados</h3>
+          <button class="icon-btn close-btn" data-close="importModal" aria-label="Fechar">×</button>
+        </div>
+        <form id="importForm">
+          <label>
+            Arquivo JSON
+            <input type="file" name="file" accept="application/json" required />
+          </label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="mode" value="merge" checked />
+              Mesclar
+            </label>
+            <label>
+              <input type="radio" name="mode" value="replace" />
+              Substituir
+            </label>
+          </div>
+          <div class="modal-footer">
+            <button class="btn ghost" type="button" data-close="importModal">Cancelar</button>
+            <button class="btn primary" type="submit">Importar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="reportModal" role="dialog" aria-modal="true" aria-labelledby="reportTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="reportTitle">Relatorio mensal</h3>
+          <button class="icon-btn close-btn" data-close="reportModal" aria-label="Fechar">×</button>
+        </div>
+        <div id="reportBody"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Imprimir">
+  <path d="M7 8V4h10v4" fill="none" stroke="currentColor" stroke-width="2"/>
+  <rect x="6" y="14" width="12" height="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <rect x="4" y="8" width="16" height="6" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+</svg>

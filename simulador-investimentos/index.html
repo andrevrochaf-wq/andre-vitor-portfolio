@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Simulador educativo de investimentos com comparacao de cenarios." />
+    <title>Simulador de Investimentos</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="container header-grid">
+        <div>
+          <p class="eyebrow">Ferramenta educativa</p>
+          <h1>Simulador de Investimentos</h1>
+          <p class="muted">Ferramenta educativa. Nao e recomendacao de investimento.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn" id="btnExport">
+            <img src="assets/icons/download.svg" alt="" aria-hidden="true" />
+            Exportar CSV
+          </button>
+          <button class="btn" id="btnToggleSettings">
+            <img src="assets/icons/settings.svg" alt="" aria-hidden="true" />
+            Config
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="section">
+        <div class="container">
+          <div class="disclaimer">
+            <img src="assets/icons/info.svg" alt="" aria-hidden="true" />
+            <p>Ferramenta educativa. Nao sou analista e isso nao e recomendacao.</p>
+          </div>
+          <div class="grid">
+            <div class="panel">
+              <h2>Cenario A</h2>
+              <form id="formA" class="form-grid">
+                <label>
+                  Aporte inicial (R$)
+                  <input type="number" name="initial" min="0" step="0.01" value="0" />
+                </label>
+                <label>
+                  Aporte mensal (R$)
+                  <input type="number" name="monthly" min="0" step="0.01" value="200" />
+                </label>
+                <label>
+                  Prazo
+                  <div class="inline">
+                    <input type="number" name="term" min="1" value="24" />
+                    <select name="termUnit">
+                      <option value="months">Meses</option>
+                      <option value="years">Anos</option>
+                    </select>
+                  </div>
+                </label>
+                <label>
+                  Taxa
+                  <div class="inline">
+                    <input type="number" name="rate" min="0" step="0.01" value="12" />
+                    <select name="rateUnit">
+                      <option value="annual">Anual</option>
+                      <option value="monthly">Mensal</option>
+                    </select>
+                  </div>
+                </label>
+                <label>
+                  Inflacao (opcional)
+                  <div class="inline">
+                    <input type="number" name="inflation" min="0" step="0.01" value="0" />
+                    <select name="inflationUnit">
+                      <option value="annual">Anual</option>
+                      <option value="monthly">Mensal</option>
+                    </select>
+                  </div>
+                </label>
+                <div class="form-actions">
+                  <button class="btn primary" type="submit">Simular</button>
+                  <button class="btn ghost" type="button" id="btnCopyToB">Usar como B</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="panel" id="panelB">
+              <div class="panel-header">
+                <h2>Cenario B</h2>
+                <button class="btn ghost" type="button" id="btnToggleB">Mostrar/ocultar</button>
+              </div>
+              <form id="formB" class="form-grid">
+                <label>
+                  Aporte inicial (R$)
+                  <input type="number" name="initial" min="0" step="0.01" value="0" />
+                </label>
+                <label>
+                  Aporte mensal (R$)
+                  <input type="number" name="monthly" min="0" step="0.01" value="400" />
+                </label>
+                <label>
+                  Prazo
+                  <div class="inline">
+                    <input type="number" name="term" min="1" value="24" />
+                    <select name="termUnit">
+                      <option value="months">Meses</option>
+                      <option value="years">Anos</option>
+                    </select>
+                  </div>
+                </label>
+                <label>
+                  Taxa
+                  <div class="inline">
+                    <input type="number" name="rate" min="0" step="0.01" value="10" />
+                    <select name="rateUnit">
+                      <option value="annual">Anual</option>
+                      <option value="monthly">Mensal</option>
+                    </select>
+                  </div>
+                </label>
+                <label>
+                  Inflacao (opcional)
+                  <div class="inline">
+                    <input type="number" name="inflation" min="0" step="0.01" value="0" />
+                    <select name="inflationUnit">
+                      <option value="annual">Anual</option>
+                      <option value="monthly">Mensal</option>
+                    </select>
+                  </div>
+                </label>
+                <div class="form-actions">
+                  <button class="btn primary" type="submit">Comparar</button>
+                  <button class="btn ghost" type="button" id="btnSwap">Trocar A/B</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Resultados</h2>
+            <p class="muted">Tempo e constancia fazem diferenca.</p>
+          </div>
+          <div class="kpi-grid" id="kpiGrid"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Grafico de crescimento</h2>
+            <p class="muted">Comparacao entre cenarios.</p>
+          </div>
+          <div class="chart-card">
+            <canvas id="growthChart" aria-label="Grafico de crescimento"></canvas>
+            <button class="btn ghost" id="btnDownloadChart">Baixar imagem</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Comparacao A vs B</h2>
+          </div>
+          <div class="compare-grid" id="compareGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container">
+        <p class="muted">Simulador educativo. Nao e recomendacao de investimento.</p>
+      </div>
+    </footer>
+
+    <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="settingsTitle">Configuracoes</h3>
+          <button class="icon-btn close-btn" data-close="settingsModal" aria-label="Fechar">×</button>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="toggleMotion" />
+          <span>Reduzir animacoes</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Kanban">
+  <rect x="3" y="5" width="6" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+  <rect x="10" y="5" width="5" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+  <rect x="16" y="5" width="5" height="6" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+</svg>

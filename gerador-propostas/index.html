@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Gerador de propostas comerciais com preview em tempo real e exportacao em PDF." />
+    <title>Gerador de Propostas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="container header-grid">
+        <div>
+          <p class="eyebrow">Propostas comerciais</p>
+          <h1>Gerador de Propostas</h1>
+          <p class="muted">Crie propostas profissionais com preview em tempo real.</p>
+        </div>
+        <div class="header-actions">
+          <div class="template-switch" role="group" aria-label="Selecionar template">
+            <button class="chip active" data-template="clean" type="button">Clean</button>
+            <button class="chip" data-template="premium" type="button">Premium</button>
+            <button class="chip" data-template="neon" type="button">Neon</button>
+          </div>
+          <button class="btn" id="btnPrint" aria-label="Imprimir ou salvar PDF">
+            <img src="assets/icons/print.svg" alt="" aria-hidden="true" />
+            Imprimir/PDF
+          </button>
+          <button class="btn" id="btnCopy" aria-label="Copiar resumo">
+            <img src="assets/icons/copy.svg" alt="" aria-hidden="true" />
+            Copiar resumo
+          </button>
+          <button class="btn" id="btnConfig" aria-label="Configuracoes">
+            <img src="assets/icons/settings.svg" alt="" aria-hidden="true" />
+            Config
+          </button>
+        </div>
+      </div>
+      <div class="container status-row">
+        <span class="status">Rascunho salvo automaticamente</span>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <div class="container split">
+        <div class="tabs">
+          <button class="tab active" data-tab="form">Editar</button>
+          <button class="tab" data-tab="preview">Preview</button>
+        </div>
+
+        <section class="panel panel-form" id="formPanel">
+          <form id="proposalForm">
+            <div class="form-section">
+              <h2>Cliente</h2>
+              <label>
+                Nome*
+                <input type="text" name="clientName" required />
+              </label>
+              <div class="grid-2">
+                <label>
+                  Empresa
+                  <input type="text" name="clientCompany" />
+                </label>
+                <label>
+                  Email
+                  <input type="email" name="clientEmail" />
+                </label>
+              </div>
+              <label>
+                WhatsApp
+                <input type="text" name="clientWhatsapp" />
+              </label>
+            </div>
+
+            <div class="form-section">
+              <div class="section-header">
+                <h2>Itens</h2>
+                <button class="btn ghost" type="button" id="btnAddItem">
+                  <img src="assets/icons/doc.svg" alt="" aria-hidden="true" />
+                  Adicionar item
+                </button>
+              </div>
+              <div id="itemsList"></div>
+            </div>
+
+            <div class="form-section">
+              <h2>Condicoes</h2>
+              <div class="grid-2">
+                <label>
+                  Desconto
+                  <div class="inline">
+                    <select name="discountType">
+                      <option value="percent">%</option>
+                      <option value="fixed">R$</option>
+                    </select>
+                    <input type="number" name="discountValue" min="0" step="0.01" placeholder="0" />
+                  </div>
+                </label>
+                <label>
+                  Prazo de entrega
+                  <input type="text" name="delivery" placeholder="Ex.: 7 dias" />
+                </label>
+              </div>
+              <div class="grid-2">
+                <label>
+                  Validade da proposta
+                  <input type="text" name="validity" placeholder="Ex.: 7 dias" />
+                </label>
+                <label>
+                  Forma de pagamento
+                  <input type="text" name="payment" placeholder="Ex.: 50% entrada + 50% entrega" />
+                </label>
+              </div>
+              <label>
+                Garantia/Suporte
+                <input type="text" name="support" />
+              </label>
+              <label>
+                Observacoes finais
+                <textarea name="notes" rows="3"></textarea>
+              </label>
+            </div>
+
+            <div class="form-footer">
+              <span class="error" id="formError" role="alert"></span>
+              <button class="btn danger" type="button" id="btnReset">
+                <img src="assets/icons/reset.svg" alt="" aria-hidden="true" />
+                Resetar rascunho
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel panel-preview" id="previewPanel">
+          <div class="preview-sheet template-clean" id="previewSheet" aria-label="Preview da proposta">
+            <div class="preview-header">
+              <div>
+                <h2 id="previewTitle">Proposta Comercial</h2>
+                <p id="previewEmitter"></p>
+              </div>
+              <img src="assets/img/logo-placeholder.svg" alt="" aria-hidden="true" class="logo" />
+            </div>
+            <div class="preview-client" id="previewClient"></div>
+            <table class="preview-table">
+              <thead>
+                <tr>
+                  <th>Descricao</th>
+                  <th>Qtd</th>
+                  <th>Unitario</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody id="previewItems"></tbody>
+            </table>
+            <div class="preview-totals" id="previewTotals"></div>
+            <div class="preview-conditions" id="previewConditions"></div>
+            <div class="preview-footer" id="previewFooter"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="modal" id="configModal" role="dialog" aria-modal="true" aria-labelledby="configTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="configTitle">Configuracoes do emitente</h3>
+          <button class="icon-btn close-btn" data-close="configModal" aria-label="Fechar modal">×</button>
+        </div>
+        <form id="configForm">
+          <label>
+            Nome
+            <input type="text" name="emitterName" />
+          </label>
+          <label>
+            Cargo
+            <input type="text" name="emitterRole" />
+          </label>
+          <label>
+            Email
+            <input type="email" name="emitterEmail" />
+          </label>
+          <label>
+            WhatsApp
+            <input type="text" name="emitterWhatsapp" />
+          </label>
+          <label>
+            LinkedIn
+            <input type="text" name="emitterLinkedin" />
+          </label>
+          <div class="modal-footer">
+            <button class="btn ghost" type="button" data-close="configModal">Cancelar</button>
+            <button class="btn primary" type="submit">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

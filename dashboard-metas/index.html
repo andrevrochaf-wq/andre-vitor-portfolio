@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Dashboard de metas de vendas offline com KPIs, insights e graficos." />
+    <meta property="og:title" content="Dashboard de Metas" />
+    <meta property="og:description" content="Acompanhe metas, registre vendas e visualize performance mensal." />
+    <title>Dashboard de Metas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="container header-grid">
+        <div>
+          <p class="eyebrow">Painel de performance</p>
+          <h1>Dashboard de Metas</h1>
+          <p class="muted">Controle vendas, acompanhe metas e tome decisoes com clareza.</p>
+        </div>
+        <div class="header-actions">
+          <div class="month-picker">
+            <button class="icon-btn" id="btnPrevMonth" aria-label="Mes anterior">
+              <img src="assets/icons/back.svg" alt="" aria-hidden="true" />
+            </button>
+            <span id="monthLabel">Janeiro 2026</span>
+            <button class="icon-btn" id="btnNextMonth" aria-label="Mes seguinte">
+              <img src="assets/icons/back.svg" class="flip" alt="" aria-hidden="true" />
+            </button>
+          </div>
+          <button class="btn primary" id="btnAddSale" aria-label="Nova venda">
+            <img src="assets/icons/add.svg" alt="" aria-hidden="true" />
+            Nova venda
+          </button>
+          <button class="btn" id="btnExport" aria-label="Exportar dados">
+            <img src="assets/icons/export.svg" alt="" aria-hidden="true" />
+            Exportar
+          </button>
+          <button class="btn" id="btnImport" aria-label="Importar dados">
+            <img src="assets/icons/import.svg" alt="" aria-hidden="true" />
+            Importar
+          </button>
+          <button class="btn" id="btnSettings" aria-label="Configuracoes">
+            <img src="assets/icons/settings.svg" alt="" aria-hidden="true" />
+            Config
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="kpis">
+        <div class="container">
+          <div class="section-head">
+            <h2>KPIs do mes</h2>
+            <button class="btn ghost" id="btnEditGoal" aria-label="Editar meta">
+              <img src="assets/icons/edit.svg" alt="" aria-hidden="true" />
+              Editar meta
+            </button>
+          </div>
+          <div class="kpi-grid" id="kpiGrid"></div>
+        </div>
+      </section>
+
+      <section class="insights">
+        <div class="container">
+          <div class="section-head">
+            <h2>Insights</h2>
+            <p class="muted">Resumo rapido do seu ritmo de vendas.</p>
+          </div>
+          <div class="insight-grid" id="insightGrid"></div>
+        </div>
+      </section>
+
+      <section class="charts">
+        <div class="container">
+          <div class="section-head">
+            <h2>Graficos</h2>
+            <p class="muted">Evolucao diaria e distribuicao por canal.</p>
+          </div>
+          <div class="chart-grid">
+            <div class="chart-card">
+              <h3>Acumulado diario</h3>
+              <canvas id="lineChart" aria-label="Grafico de linha"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Vendas por canal</h3>
+              <canvas id="barChart" aria-label="Grafico de barras"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Heatmap do mes</h3>
+              <div class="heatmap" id="heatmap"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sales">
+        <div class="container">
+          <div class="section-head">
+            <h2>Vendas registradas</h2>
+            <div class="filters">
+              <select id="filterChannel" aria-label="Filtrar por canal">
+                <option value="">Todos os canais</option>
+                <option value="Loja">Loja</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Indicacao">Indicacao</option>
+                <option value="Outro">Outro</option>
+              </select>
+              <input type="date" id="filterStart" aria-label="Data inicial" />
+              <input type="date" id="filterEnd" aria-label="Data final" />
+              <div class="search-field">
+                <img src="assets/icons/filter.svg" alt="" aria-hidden="true" />
+                <input type="search" id="searchInput" placeholder="Buscar por cliente ou observacao" aria-label="Buscar vendas" />
+              </div>
+              <select id="sortBy" aria-label="Ordenar">
+                <option value="recente">Mais recente</option>
+                <option value="valor">Maior valor</option>
+                <option value="canal">Canal</option>
+                <option value="data">Data</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="sales-table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Valor</th>
+                  <th>Canal</th>
+                  <th>Cliente</th>
+                  <th>Observacao</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="salesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container">
+        <p class="muted">Dashboard de Metas — v1.0 &middot; Offline</p>
+      </div>
+    </footer>
+
+    <button class="fab" id="fabAdd" aria-label="Adicionar venda">
+      <img src="assets/icons/add.svg" alt="" aria-hidden="true" />
+    </button>
+
+    <div class="modal" id="saleModal" role="dialog" aria-modal="true" aria-labelledby="saleModalTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="saleModalTitle">Nova venda</h3>
+          <button class="icon-btn close-btn" data-close="saleModal" aria-label="Fechar modal">×</button>
+        </div>
+        <form id="saleForm">
+          <div class="form-grid">
+            <label>
+              Data*
+              <input type="date" name="data" required />
+            </label>
+            <label>
+              Valor (R$)*
+              <input type="number" name="valor" min="0.01" step="0.01" required />
+            </label>
+            <label>
+              Canal*
+              <select name="canal" required>
+                <option value="Loja">Loja</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Indicacao">Indicacao</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </label>
+            <label>
+              Cliente
+              <input type="text" name="cliente" />
+            </label>
+          </div>
+          <label class="full">
+            Observacoes
+            <textarea name="observacoes" rows="3"></textarea>
+          </label>
+          <div class="modal-footer">
+            <button class="btn ghost" type="button" data-close="saleModal">Cancelar</button>
+            <button class="btn primary" type="submit">Salvar venda</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="goalModal" role="dialog" aria-modal="true" aria-labelledby="goalModalTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="goalModalTitle">Meta mensal</h3>
+          <button class="icon-btn close-btn" data-close="goalModal" aria-label="Fechar modal">×</button>
+        </div>
+        <form id="goalForm">
+          <label>
+            Meta do mes (R$)
+            <input type="number" name="meta" min="0" step="0.01" required />
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="toggleBusinessDays" />
+            <span>Calcular usando apenas dias uteis (seg-sex)</span>
+          </label>
+          <div class="modal-footer">
+            <button class="btn ghost" type="button" data-close="goalModal">Cancelar</button>
+            <button class="btn primary" type="submit">Salvar meta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="importModal" role="dialog" aria-modal="true" aria-labelledby="importModalTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="importModalTitle">Importar dados</h3>
+          <button class="icon-btn close-btn" data-close="importModal" aria-label="Fechar modal">×</button>
+        </div>
+        <form id="importForm">
+          <label>
+            Arquivo JSON
+            <input type="file" name="file" accept="application/json" required />
+          </label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="importMode" value="merge" checked />
+              Mesclar com dados atuais
+            </label>
+            <label>
+              <input type="radio" name="importMode" value="replace" />
+              Substituir tudo
+            </label>
+          </div>
+          <p class="muted" id="importPreview">Selecione um arquivo para ver o resumo.</p>
+          <div class="modal-footer">
+            <button class="btn ghost" type="button" data-close="importModal">Cancelar</button>
+            <button class="btn primary" type="submit">Importar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" hidden>
+      <div class="modal-content" tabindex="-1">
+        <div class="modal-header">
+          <h3 id="settingsModalTitle">Configuracoes</h3>
+          <button class="icon-btn close-btn" data-close="settingsModal" aria-label="Fechar modal">×</button>
+        </div>
+        <div class="settings-grid">
+          <label class="toggle">
+            <input type="checkbox" id="toggleMotion" />
+            <span>Reduzir animacoes</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Mini game arcade em canvas com desafios rapidos e visual neon." />
+    <title>Mini Game — Neon Drift</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+
+    <header class="game-header">
+      <div class="container">
+        <div>
+          <p class="eyebrow">Arcade rapido</p>
+          <h1>Neon Drift</h1>
+          <p class="muted">Desvie, colete energia e mantenha o ritmo.</p>
+        </div>
+        <div class="hud">
+          <div>
+            <span>Pontuacao</span>
+            <strong id="score">0</strong>
+          </div>
+          <div>
+            <span>Combo</span>
+            <strong id="combo">1x</strong>
+          </div>
+          <div>
+            <span>Recorde</span>
+            <strong id="best">0</strong>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="game-main">
+      <div class="container game-grid">
+        <div class="panel">
+          <h2>Como jogar</h2>
+          <ul>
+            <li>Mova o cursor ou toque para controlar o orbe.</li>
+            <li>Desvie dos drones e colete os orbes de energia.</li>
+            <li>Combos aumentam a velocidade e a pontuacao.</li>
+            <li>Power-up de escudo segura um impacto.</li>
+          </ul>
+          <div class="actions">
+            <button class="btn primary" id="btnStart">Iniciar</button>
+            <button class="btn ghost" id="btnPause">Pausar</button>
+            <button class="btn ghost" id="btnRestart">Reiniciar</button>
+          </div>
+          <div class="status" id="status">Pronto para jogar?</div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="gameCanvas" width="800" height="520" aria-label="Area do jogo"></canvas>
+          <div class="overlay" id="overlay">
+            <div>
+              <h3>Neon Drift</h3>
+              <p>Sobreviva o maximo que puder.</p>
+              <button class="btn primary" id="btnOverlayStart">Jogar agora</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="game-footer">
+      <div class="container">
+        <p class="muted">Mini game para portfólio — offline e leve.</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

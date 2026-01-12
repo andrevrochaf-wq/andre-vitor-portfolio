@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Mini CRM offline para organizar leads em um funil de vendas com Kanban e lista." />
+    <meta property="og:title" content="Mini CRM — Leads" />
+    <meta property="og:description" content="Organize leads, acompanhe o funil e foque nos follow-ups prioritarios." />
+    <title>Mini CRM — Leads</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="container header-grid">
+        <div>
+          <p class="eyebrow">CRM Offline</p>
+          <h1>Mini CRM — Leads</h1>
+          <p class="muted">Organize contatos e acompanhe o funil com foco nas proximas acoes.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn primary" id="btnAdd" aria-label="Adicionar lead">
+            <img src="assets/icons/add.svg" alt="" aria-hidden="true" />
+            Adicionar lead
+          </button>
+          <button class="btn" id="btnToggleView" aria-label="Alternar visualizacao">
+            <img src="assets/icons/kanban.svg" alt="" aria-hidden="true" />
+            Kanban
+          </button>
+          <button class="btn" id="btnExport" aria-label="Exportar dados">
+            <img src="assets/icons/export.svg" alt="" aria-hidden="true" />
+            Exportar
+          </button>
+          <button class="btn" id="btnImport" aria-label="Importar dados">
+            <img src="assets/icons/search.svg" alt="" aria-hidden="true" />
+            Importar
+          </button>
+          <button class="btn" id="btnSettings" aria-label="Configuracoes">
+            <img src="assets/icons/settings.svg" alt="" aria-hidden="true" />
+            Config
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="filters">
+        <div class="container filters-grid">
+          <div class="search-field">
+            <img src="assets/icons/search.svg" alt="" aria-hidden="true" />
+            <input type="search" id="searchInput" placeholder="Buscar por nome, telefone ou email" aria-label="Buscar leads" />
+          </div>
+          <select id="filterStatus" aria-label="Filtrar por status">
+            <option value="">Todos os status</option>
+            <option value="novo">Novo</option>
+            <option value="contato">Contato</option>
+            <option value="proposta">Proposta</option>
+            <option value="fechado">Fechado</option>
+            <option value="perdido">Perdido</option>
+          </select>
+          <select id="filterOrigem" aria-label="Filtrar por origem">
+            <option value="">Todas as origens</option>
+            <option value="Indicacao">Indicacao</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Loja">Loja</option>
+            <option value="Site">Site</option>
+            <option value="Outro">Outro</option>
+          </select>
+          <select id="sortBy" aria-label="Ordenar">
+            <option value="recente">Mais recente</option>
+            <option value="nome">Nome (A-Z)</option>
+            <option value="valor">Maior valor potencial</option>
+            <option value="followup">Follow-up mais proximo</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="priorities">
+        <div class="container">
+          <div class="section-head">
+            <h2>Prioridades</h2>
+            <p class="muted">Leads com follow-up para hoje ou atrasados.</p>
+          </div>
+          <div class="priority-list" id="priorityList"></div>
+        </div>
+      </section>
+
+      <section class="board">
+        <div class="container">
+          <div class="board-header">
+            <h2>Funil de vendas</h2>
+            <span class="muted" id="leadCount"></span>
+          </div>
+          <div class="kanban" id="kanbanBoard" aria-label="Quadro Kanban"></div>
+          <div class="list-view" id="listView" hidden>
+            <table class="leads-table">
+              <thead>
+                <tr>
+                  <th>Lead</th>
+                  <th>Origem</th>
+                  <th>Status</th>
+                  <th>Proxima acao</th>
+                  <th>Follow-up</th>
+                  <th>Valor (R$)</th>
+                  <th>Atualizado</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="listBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container">
+        <p class="muted">Mini CRM — v1.0 &middot; Atualizado em <span id="footerDate"></span></p>
+      </div>
+    </footer>
+
+    <div class="modal" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle" hidden>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="leadModalTitle">Novo lead</h3>
+          <button class="icon-btn close-btn" data-close="leadModal" aria-label="Fechar modal">×</button>
+        </div>
+        <form id="leadForm">
+          <div class="form-grid">
+            <label>
+              Nome*
+              <input type="text" name="nome" required />
+            </label>
+            <label>
+              Telefone/WhatsApp
+              <input type="text" name="telefone" placeholder="(00) 00000-0000" />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" placeholder="email@exemplo.com" />
+            </label>
+            <label>
+              Origem
+              <select name="origem">
+                <option value="Indicacao">Indicacao</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Loja">Loja</option>
+                <option value="Site">Site</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </label>
+            <label>
+              Status
+              <select name="status">
+                <option value="novo">Novo</option>
+                <option value="contato">Contato</option>
+                <option value="proposta">Proposta</option>
+                <option value="fechado">Fechado</option>
+                <option value="perdido">Perdido</option>
+              </select>
+            </label>
+            <label>
+              Valor potencial (R$)
+              <input type="number" name="valor" min="0" step="0.01" placeholder="0,00" />
+            </label>
+            <label>
+              Proxima acao
+              <input type="text" name="acao" maxlength="80" />
+            </label>
+            <label>
+              Data de follow-up
+              <input type="date" name="followup" />
+            </label>
+          </div>
+          <label class="full">
+            Observacoes
+            <textarea name="observacoes" rows="3"></textarea>
+          </label>
+          <div class="modal-footer">
+            <button class="btn ghost" type="button" data-close="leadModal">Cancelar</button>
+            <button class="btn primary" type="submit">Salvar lead</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="importModal" role="dialog" aria-modal="true" aria-labelledby="importModalTitle" hidden>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="importModalTitle">Importar dados</h3>
+          <button class="icon-btn close-btn" data-close="importModal" aria-label="Fechar modal">×</button>
+        </div>
+        <form id="importForm">
+          <label>
+            Arquivo JSON
+            <input type="file" name="file" accept="application/json" required />
+          </label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="importMode" value="merge" checked />
+              Mesclar com dados atuais
+            </label>
+            <label>
+              <input type="radio" name="importMode" value="replace" />
+              Substituir tudo
+            </label>
+          </div>
+          <div class="modal-footer">
+            <button class="btn ghost" type="button" data-close="importModal">Cancelar</button>
+            <button class="btn primary" type="submit">Importar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" hidden>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="settingsModalTitle">Configuracoes</h3>
+          <button class="icon-btn close-btn" data-close="settingsModal" aria-label="Fechar modal">×</button>
+        </div>
+        <div class="settings-grid">
+          <label class="toggle">
+            <input type="checkbox" id="toggleMotion" />
+            <span>Reduzir animacoes</span>
+          </label>
+          <button class="btn danger" id="btnReset">Resetar dados</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
